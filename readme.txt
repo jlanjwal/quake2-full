@@ -27,3 +27,41 @@ John Carmack
 Id Software
 
 
+Mod Info
+This mod is inspired by Fire Emblem
+
+Movement:
+The mod is in first person but the direction you face has not impact on the direction
+you move. Forward, backward, left, and right are all predetermined directions
+
+Stats:
+Normal rpg stat stuff
+HP is how much damage you can take before you die.
+Attack affects how much damage you can do in a physical class.
+Magic affects how much damage you can do in the magical class.
+Dexterity affects crit rate. Crits do triple damage.
+Speed affects avoid rate. Avoiding lets you take 0 damage.
+Defense affects how much damage you take from physical attacks.
+Resistance affects how much damage you take from magical attacks.
+
+Classes:
+Berserker: High HP and Attack low everything else.
+Sniper: High Dex average everything else.
+Swordmaster: High Speed average everything else.
+Armored Knight: High Defense low Speed and Resistance.
+Sorcerer: High Magic and Resistance and low Attack.
+
+Level System:
+You gain 30 xp per kill.
+Leveling up happens when you have over 100 xp.
+Each class has their own growth rates based on their specialty.
+
+Combat:
+The combat is turn based.
+Monsters cannot move until you attack them.
+When you deal damage to a monster you will no longer be able to attack or move.
+When a monster hits you, you will be able to move and attack again and they will no longer be able to move.
+
+To Install and play:
+Download from GitHub. Build the game on Visual Studio. Make a new folder in the Quake 2 directory.
+Put the .dll file that you get from building the game in the new folder.
