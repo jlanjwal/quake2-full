@@ -445,6 +445,7 @@ typedef struct
 
 	int			power_armor_type;
 	int			power_armor_power;
+	int active;
 } monsterinfo_t;
 
 
@@ -862,6 +863,35 @@ typedef struct
 	int			helpchanged;
 
 	qboolean	spectator;			// client is a spectator
+
+	//mod
+	int level;
+	int xp;
+	int attack;
+	int magic;
+	int dexterity;
+	int speedStat;
+	int defense;
+	int resistance;
+	
+	int baseHealth;
+	int baseAttack;
+	int baseMagic;
+	int baseDexterity;
+	int baseSpeedStat;
+	int baseDefense;
+	int baseResistance;
+
+	float healthGrowth;
+	float attackGrowth;
+	float magicGrowth;
+	float dexterityGrowth;
+	float speedStatGrowth;
+	float defenseGrowth;
+	float resistanceGrowth;
+
+	int class;
+
 } client_persistant_t;
 
 // client data that stays across deathmatch respawns
@@ -959,6 +989,16 @@ struct gclient_s
 
 	edict_t		*chase_target;		// player we are chasing
 	qboolean	update_chase;		// need to update chase info?
+
+	//mod
+	int act;
+	int level;
+	int attack;
+	int magic;
+	int dexterity;
+	int speedStat;
+	int defense;
+	int resistance;
 };
 
 
@@ -1109,5 +1149,14 @@ struct edict_s
 	// common data blocks
 	moveinfo_t		moveinfo;
 	monsterinfo_t	monsterinfo;
+
+	//mod
+	int level;
+	int attack;
+	int magic;
+	int dexterity;
+	int speedStat;
+	int defense;
+	int resistance;
 };
 

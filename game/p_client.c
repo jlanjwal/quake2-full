@@ -627,6 +627,34 @@ void InitClientPersistant (gclient_t *client)
 	client->pers.max_slugs		= 50;
 
 	client->pers.connected = true;
+
+	client->pers.class = 0;
+	client->pers.level = 1;
+	client->pers.xp = 0;
+	client->pers.attack = 10;
+	client->pers.magic = 10;
+	client->pers.dexterity = 10;
+	client->pers.speedStat = 10;
+	client->pers.defense = 10;
+	client->pers.resistance = 10;
+	
+	client->pers.baseHealth = client->pers.max_health;
+	client->pers.baseAttack = 10;
+	client->pers.baseMagic = 10;
+	client->pers.baseDexterity = 10;
+	client->pers.baseSpeedStat = 10;
+	client->pers.baseDefense = 10;
+	client->pers.baseResistance = 10;
+
+	client->pers.healthGrowth = .5;
+	client->pers.attackGrowth = .5;
+	client->pers.magicGrowth = .5;
+	client->pers.dexterityGrowth = .5;
+	client->pers.speedStatGrowth = .5;
+	client->pers.defenseGrowth = .5;
+	client->pers.resistanceGrowth = .5;
+
+	client->act = 0;
 }
 
 
@@ -1573,9 +1601,54 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 	edict_t	*other;
 	int		i, j;
 	pmove_t	pm;
+	trace_t tr;
+	vec3_t end;
 
 	level.current_entity = ent;
 	client = ent->client;
+
+	if (client->act == 0) {
+		if (ucmd->forwardmove < 0) {
+			end[0] = 10;
+			VectorAdd(end, ent->s.origin, end);
+			tr = gi.trace(ent->s.origin, NULL, NULL, end, ent, MASK_SOLID);
+			if (tr.fraction >= 1.0) {
+				VectorCopy(end, ent->s.origin);
+			}
+		}
+		if (ucmd->forwardmove > 0) {
+			end[0] = -10;
+			VectorAdd(end, ent->s.origin, end);
+			tr = gi.trace(ent->s.origin, NULL, NULL, end, ent, MASK_SOLID);
+			if (tr.fraction >= 1.0) {
+				VectorCopy(end, ent->s.origin);
+			}
+		}
+		if (ucmd->sidemove > 0) {
+			end[1] = 10;
+			VectorAdd(end, ent->s.origin, end);
+			tr = gi.trace(ent->s.origin, NULL, NULL, end, ent, MASK_SOLID);
+			if (tr.fraction >= 1.0) {
+				VectorCopy(end, ent->s.origin);
+			}
+		}
+		if (ucmd->sidemove < 0) {
+			end[1] = -10;
+			VectorAdd(end, ent->s.origin, end);
+			tr = gi.trace(ent->s.origin, NULL, NULL, end, ent, MASK_SOLID);
+			if (tr.fraction >= 1.0) {
+				VectorCopy(end, ent->s.origin);
+			}
+		}
+	}
+	else {
+		if (ucmd->sidemove || ucmd->forwardmove) {
+			ent->velocity[0] = 0;
+			ent->velocity[1] = 0;
+			ent->velocity[2] = 0;
+		}
+	}
+
 
 	if (level.intermissiontime)
 	{

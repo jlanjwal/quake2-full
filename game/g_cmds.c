@@ -899,6 +899,127 @@ void Cmd_PlayerList_f(edict_t *ent)
 	gi.cprintf(ent, PRINT_HIGH, "%s", text);
 }
 
+void Cmd_Berserker_f(edict_t* ent) {
+	if (ent->client) {
+		ent->client->pers.class = 1;
+		ent->client->pers.max_health = ent->client->pers.baseHealth * 1.5;
+		if (ent->client->pers.health > ent->client->pers.max_health)
+			ent->client->pers.health = ent->client->pers.max_health;
+		ent->client->pers.attack = ent->client->pers.baseAttack * 1.3;
+		ent->client->pers.defense = ent->client->pers.baseDefense * 0.7;
+		ent->client->pers.magic = ent->client->pers.baseMagic * 0.3;
+		ent->client->pers.dexterity = ent->client->pers.baseDexterity;
+		ent->client->pers.speedStat = ent->client->pers.baseSpeedStat * .7;
+		ent->client->pers.resistance = ent->client->pers.baseResistance * .2;
+		ent->client->pers.healthGrowth = .7;
+		ent->client->pers.attackGrowth = .55;
+		ent->client->pers.magicGrowth = .1;
+		ent->client->pers.dexterityGrowth = .4;
+		ent->client->pers.speedStatGrowth = .3;
+		ent->client->pers.defenseGrowth = .3;
+		ent->client->pers.resistanceGrowth = .2;
+		gi.centerprintf(ent, "Class: Berserker\nLevel: %d\nExp: %d\nAttack: %d\nDefense: %d\n Dex: %d\nSpeed: %d\nDefense: %d\nResistance: %d\n",
+			ent->client->pers.level, ent->client->pers.xp,
+			ent->client->pers.attack, ent->client->pers.magic, ent->client->pers.dexterity,
+			ent->client->pers.speedStat, ent->client->pers.defense, ent->client->pers.resistance);
+	}
+}
+
+void Cmd_Sniper_f(edict_t* ent) {
+	ent->client->pers.class = 2;
+	ent->client->pers.max_health = ent->client->pers.baseHealth;
+	if (ent->client->pers.health > ent->client->pers.max_health)
+		ent->client->pers.health = ent->client->pers.max_health;
+	ent->client->pers.attack = ent->client->pers.baseAttack;
+	ent->client->pers.defense = ent->client->pers.baseDefense;
+	ent->client->pers.magic = ent->client->pers.baseMagic * 0.8;
+	ent->client->pers.dexterity = ent->client->pers.baseDexterity * 1.3;
+	ent->client->pers.speedStat = ent->client->pers.baseSpeedStat;
+	ent->client->pers.resistance = ent->client->pers.baseResistance;
+	ent->client->pers.healthGrowth = .4;
+	ent->client->pers.attackGrowth = .35;
+	ent->client->pers.magicGrowth = .25;
+	ent->client->pers.dexterityGrowth = .5;
+	ent->client->pers.speedStatGrowth = .3;
+	ent->client->pers.defenseGrowth = .3;
+	ent->client->pers.resistanceGrowth = .3;
+	gi.centerprintf(ent, "Class: Sniper\nLevel: %d\nExp: %d\nAttack: %d\nDefense: %d\n Dex: %d\nSpeed: %d\nDefense: %d\nResistance: %d\n",
+		ent->client->pers.level, ent->client->pers.xp,
+		ent->client->pers.attack, ent->client->pers.magic, ent->client->pers.dexterity,
+		ent->client->pers.speedStat, ent->client->pers.defense, ent->client->pers.resistance);
+}
+
+void Cmd_Sorcerer_f(edict_t* ent) {
+	ent->client->pers.class = 5;
+	ent->client->pers.max_health = ent->client->pers.baseHealth;
+	if (ent->client->pers.health > ent->client->pers.max_health)
+		ent->client->pers.health = ent->client->pers.max_health;
+	ent->client->pers.attack = ent->client->pers.baseAttack * 0.6;
+	ent->client->pers.defense = ent->client->pers.baseDefense * 0.7;
+	ent->client->pers.magic = ent->client->pers.baseMagic * 1.5;
+	ent->client->pers.dexterity = ent->client->pers.baseDexterity * 1.1;
+	ent->client->pers.speedStat = ent->client->pers.baseSpeedStat;
+	ent->client->pers.resistance = ent->client->pers.baseResistance * 1.2;
+	ent->client->pers.healthGrowth = .4;
+	ent->client->pers.attackGrowth = .25;
+	ent->client->pers.magicGrowth = .55;
+	ent->client->pers.dexterityGrowth = .35;
+	ent->client->pers.speedStatGrowth = .35;
+	ent->client->pers.defenseGrowth = .35;
+	ent->client->pers.resistanceGrowth = .5;
+	gi.centerprintf(ent, "Class: Sorcerer\nLevel: %d\nExp: %d\nAttack: %d\nDefense: %d\n Dex: %d\nSpeed: %d\nDefense: %d\nResistance: %d\n",
+		ent->client->pers.level, ent->client->pers.xp,
+		ent->client->pers.attack, ent->client->pers.magic, ent->client->pers.dexterity,
+		ent->client->pers.speedStat, ent->client->pers.defense, ent->client->pers.resistance);
+}
+
+void Cmd_Swordmaster_f(edict_t* ent) {
+	ent->client->pers.class = 3;
+	ent->client->pers.max_health = ent->client->pers.baseHealth * 1.1;
+	if (ent->client->pers.health > ent->client->pers.max_health)
+		ent->client->pers.health = ent->client->pers.max_health;
+	ent->client->pers.attack = ent->client->pers.baseAttack * 1.1;
+	ent->client->pers.defense = ent->client->pers.baseDefense * 0.9;
+	ent->client->pers.magic = ent->client->pers.baseMagic * 0.8;
+	ent->client->pers.dexterity = ent->client->pers.baseDexterity * 1.1;
+	ent->client->pers.speedStat = ent->client->pers.baseSpeedStat * 1.3;
+	ent->client->pers.resistance = ent->client->pers.baseResistance * 0.8;
+	ent->client->pers.healthGrowth = .55;
+	ent->client->pers.attackGrowth = .4;
+	ent->client->pers.magicGrowth = .25;
+	ent->client->pers.dexterityGrowth = .4;
+	ent->client->pers.speedStatGrowth = .5;
+	ent->client->pers.defenseGrowth = .3;
+	ent->client->pers.resistanceGrowth = .25;
+	gi.centerprintf(ent, "Class: Swordmaster\nLevel: %d\nExp: %d\nAttack: %d\nDefense: %d\n Dex: %d\nSpeed: %d\nDefense: %d\nResistance: %d\n",
+		ent->client->pers.level, ent->client->pers.xp,
+		ent->client->pers.attack, ent->client->pers.magic, ent->client->pers.dexterity,
+		ent->client->pers.speedStat, ent->client->pers.defense, ent->client->pers.resistance);
+}
+
+void Cmd_ArmoredKnight_f(edict_t* ent) {
+	ent->client->pers.class = 4;
+	ent->client->pers.max_health = ent->client->pers.baseHealth * 1.3;
+	if (ent->client->pers.health > ent->client->pers.max_health)
+		ent->client->pers.health = ent->client->pers.max_health;
+	ent->client->pers.attack = ent->client->pers.baseAttack * 1.1;
+	ent->client->pers.defense = ent->client->pers.baseDefense * 1.7;
+	ent->client->pers.magic = ent->client->pers.baseMagic * 0.5;
+	ent->client->pers.dexterity = ent->client->pers.baseDexterity;
+	ent->client->pers.speedStat = ent->client->pers.baseSpeedStat * 0.3;
+	ent->client->pers.resistance = ent->client->pers.baseResistance * 0.5;
+	ent->client->pers.healthGrowth = .6;
+	ent->client->pers.attackGrowth = .4;
+	ent->client->pers.magicGrowth = .05;
+	ent->client->pers.dexterityGrowth = .3;
+	ent->client->pers.speedStatGrowth = .05;
+	ent->client->pers.defenseGrowth = .7;
+	ent->client->pers.resistanceGrowth = .2;
+	gi.centerprintf(ent, "Class: ArmoredKnight\nLevel: %d\nExp: %d\nAttack: %d\nDefense: %d\n Dex: %d\nSpeed: %d\nDefense: %d\nResistance: %d\n",
+		ent->client->pers.level, ent->client->pers.xp,
+		ent->client->pers.attack, ent->client->pers.magic, ent->client->pers.dexterity,
+		ent->client->pers.speedStat, ent->client->pers.defense, ent->client->pers.resistance);
+}
 
 /*
 =================
@@ -943,50 +1064,60 @@ void ClientCommand (edict_t *ent)
 	if (level.intermissiontime)
 		return;
 
-	if (Q_stricmp (cmd, "use") == 0)
-		Cmd_Use_f (ent);
-	else if (Q_stricmp (cmd, "drop") == 0)
-		Cmd_Drop_f (ent);
-	else if (Q_stricmp (cmd, "give") == 0)
-		Cmd_Give_f (ent);
-	else if (Q_stricmp (cmd, "god") == 0)
-		Cmd_God_f (ent);
-	else if (Q_stricmp (cmd, "notarget") == 0)
-		Cmd_Notarget_f (ent);
-	else if (Q_stricmp (cmd, "noclip") == 0)
-		Cmd_Noclip_f (ent);
-	else if (Q_stricmp (cmd, "inven") == 0)
-		Cmd_Inven_f (ent);
-	else if (Q_stricmp (cmd, "invnext") == 0)
-		SelectNextItem (ent, -1);
-	else if (Q_stricmp (cmd, "invprev") == 0)
-		SelectPrevItem (ent, -1);
-	else if (Q_stricmp (cmd, "invnextw") == 0)
-		SelectNextItem (ent, IT_WEAPON);
-	else if (Q_stricmp (cmd, "invprevw") == 0)
-		SelectPrevItem (ent, IT_WEAPON);
-	else if (Q_stricmp (cmd, "invnextp") == 0)
-		SelectNextItem (ent, IT_POWERUP);
-	else if (Q_stricmp (cmd, "invprevp") == 0)
-		SelectPrevItem (ent, IT_POWERUP);
-	else if (Q_stricmp (cmd, "invuse") == 0)
-		Cmd_InvUse_f (ent);
-	else if (Q_stricmp (cmd, "invdrop") == 0)
-		Cmd_InvDrop_f (ent);
-	else if (Q_stricmp (cmd, "weapprev") == 0)
-		Cmd_WeapPrev_f (ent);
-	else if (Q_stricmp (cmd, "weapnext") == 0)
-		Cmd_WeapNext_f (ent);
-	else if (Q_stricmp (cmd, "weaplast") == 0)
-		Cmd_WeapLast_f (ent);
-	else if (Q_stricmp (cmd, "kill") == 0)
-		Cmd_Kill_f (ent);
-	else if (Q_stricmp (cmd, "putaway") == 0)
-		Cmd_PutAway_f (ent);
-	else if (Q_stricmp (cmd, "wave") == 0)
-		Cmd_Wave_f (ent);
+	if (Q_stricmp(cmd, "use") == 0)
+		Cmd_Use_f(ent);
+	else if (Q_stricmp(cmd, "drop") == 0)
+		Cmd_Drop_f(ent);
+	else if (Q_stricmp(cmd, "give") == 0)
+		Cmd_Give_f(ent);
+	else if (Q_stricmp(cmd, "god") == 0)
+		Cmd_God_f(ent);
+	else if (Q_stricmp(cmd, "notarget") == 0)
+		Cmd_Notarget_f(ent);
+	else if (Q_stricmp(cmd, "noclip") == 0)
+		Cmd_Noclip_f(ent);
+	else if (Q_stricmp(cmd, "inven") == 0)
+		Cmd_Inven_f(ent);
+	else if (Q_stricmp(cmd, "invnext") == 0)
+		SelectNextItem(ent, -1);
+	else if (Q_stricmp(cmd, "invprev") == 0)
+		SelectPrevItem(ent, -1);
+	else if (Q_stricmp(cmd, "invnextw") == 0)
+		SelectNextItem(ent, IT_WEAPON);
+	else if (Q_stricmp(cmd, "invprevw") == 0)
+		SelectPrevItem(ent, IT_WEAPON);
+	else if (Q_stricmp(cmd, "invnextp") == 0)
+		SelectNextItem(ent, IT_POWERUP);
+	else if (Q_stricmp(cmd, "invprevp") == 0)
+		SelectPrevItem(ent, IT_POWERUP);
+	else if (Q_stricmp(cmd, "invuse") == 0)
+		Cmd_InvUse_f(ent);
+	else if (Q_stricmp(cmd, "invdrop") == 0)
+		Cmd_InvDrop_f(ent);
+	else if (Q_stricmp(cmd, "weapprev") == 0)
+		Cmd_WeapPrev_f(ent);
+	else if (Q_stricmp(cmd, "weapnext") == 0)
+		Cmd_WeapNext_f(ent);
+	else if (Q_stricmp(cmd, "weaplast") == 0)
+		Cmd_WeapLast_f(ent);
+	else if (Q_stricmp(cmd, "kill") == 0)
+		Cmd_Kill_f(ent);
+	else if (Q_stricmp(cmd, "putaway") == 0)
+		Cmd_PutAway_f(ent);
+	else if (Q_stricmp(cmd, "wave") == 0)
+		Cmd_Wave_f(ent);
 	else if (Q_stricmp(cmd, "playerlist") == 0)
 		Cmd_PlayerList_f(ent);
+	else if (Q_stricmp(cmd, "Berserker") == 0)
+		Cmd_Berserker_f(ent);
+	else if (Q_stricmp(cmd, "Sniper") == 0)
+		Cmd_Sniper_f(ent);
+	else if (Q_stricmp(cmd, "ArmoredKnight") == 0)
+		Cmd_ArmoredKnight_f(ent);
+	else if (Q_stricmp(cmd, "Sorcerer") == 0)
+		Cmd_Sorcerer_f(ent);
+	else if (Q_stricmp(cmd, "Swordmaster") == 0)
+		Cmd_Swordmaster_f(ent);
 	else	// anything that doesn't match a command will be a chat
 		Cmd_Say_f (ent, false, true);
 }

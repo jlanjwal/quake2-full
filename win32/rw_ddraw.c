@@ -307,7 +307,7 @@ void DDRAW_SetPalette( const unsigned char *pal )
 												256,
 												palentries ) != DD_OK )
 	{
-		ri.Con_Printf( PRINT_ALL, "DDRAW_SetPalette() - SetEntries failed\n" );
+		//ri.Con_Printf( PRINT_ALL, "DDRAW_SetPalette() - SetEntries failed\n" );
 	}
 }
 

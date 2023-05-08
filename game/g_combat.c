@@ -83,6 +83,53 @@ qboolean CanDamage (edict_t *targ, edict_t *inflictor)
 	return false;
 }
 
+/*
+ Mod
+ LevelUp
+*/
+void LevelUp(client_persistant_t *player) {
+	
+	if (player->xp >= 100) {
+		player->level++;
+
+		if (random() <= player->healthGrowth) {
+			player->health += 5;
+			player->baseHealth += 5;
+			player->max_health += 5;
+		}
+
+		if (random() <= player->attackGrowth) {
+			player->attack++;
+			player->baseAttack++;
+		}
+
+		if (random() <= player->magicGrowth) {
+			player->magic++;
+			player->baseMagic++;
+		}
+
+		if (random() <= player->dexterityGrowth) {
+			player->dexterity++;
+			player->baseDexterity++;
+		}
+
+		if (random() <= player->speedStatGrowth) {
+			player->speedStat++;
+			player->baseSpeedStat++;
+		}
+
+		if (random() <= player->defenseGrowth) {
+			player->defense++;
+			player->baseDefense++;
+		}
+
+		if (random() <= player->resistanceGrowth) {
+			player->resistance++;
+			player->baseResistance++;
+		}
+		player->xp -= 100;
+	}
+}
 
 /*
 ============
@@ -91,6 +138,7 @@ Killed
 */
 void Killed (edict_t *targ, edict_t *inflictor, edict_t *attacker, int damage, vec3_t point)
 {
+	char* classArr[] = { "None", "Berserker", "Sniper", "Swordmaster", "ArmoredKnight", "Sorcerer" };
 	if (targ->health < -999)
 		targ->health = -999;
 
@@ -107,6 +155,16 @@ void Killed (edict_t *targ, edict_t *inflictor, edict_t *attacker, int damage, v
 			// medics won't heal monsters that they kill themselves
 			if (strcmp(attacker->classname, "monster_medic") == 0)
 				targ->owner = attacker;
+
+			if (attacker->client) {
+				attacker->client->act = 0;
+				attacker->client->pers.xp += 30;
+				LevelUp(&attacker->client->pers);
+				gi.centerprintf(attacker, "Class: %s\nLevel: %d\nExp: %d\nAttack: %d\nDefense: %d\n Dex: %d\nSpeed: %d\nDefense: %d\nResistance: %d\n",
+					classArr[attacker->client->pers.class], attacker->client->pers.level, attacker->client->pers.xp, 
+					attacker->client->pers.attack, attacker->client->pers.magic, attacker->client->pers.dexterity,
+					attacker->client->pers.speedStat, attacker->client->pers.defense, attacker->client->pers.resistance);
+			}
 		}
 	}
 
@@ -471,10 +529,10 @@ void T_Damage (edict_t *targ, edict_t *inflictor, edict_t *attacker, vec3_t dir,
 	}
 
 	psave = CheckPowerArmor (targ, point, normal, take, dflags);
-	take -= psave;
+	//take -= psave;
 
 	asave = CheckArmor (targ, point, normal, take, te_sparks, dflags);
-	take -= asave;
+	//take -= asave;
 
 	//treat cheat/powerup savings the same as armor
 	asave += save;
@@ -482,6 +540,46 @@ void T_Damage (edict_t *targ, edict_t *inflictor, edict_t *attacker, vec3_t dir,
 	// team damage avoidance
 	if (!(dflags & DAMAGE_NO_PROTECTION) && CheckTeamDamage (targ, attacker))
 		return;
+
+	if (attacker->client) {
+		if (attacker->client->pers.class == 5) {
+			take *= (1 + (attacker->client->pers.magic / 100.0));
+		}
+		else {
+			take *= (1 + (attacker->client->pers.attack / 100.0));
+		}
+		
+		if (random() <= (attacker->client->pers.dexterity / 100.0)) {
+			take *= 3;
+			gi.centerprintf(attacker, "You crit and enemy took %d damage\n", take);
+		}
+		else {
+			gi.centerprintf(attacker, "Enemy took %d damage\n", take);
+		}
+		if (targ->svflags & SVF_MONSTER) {
+			targ->nextthink = level.time;
+			targ->monsterinfo.active = 0;
+			targ->enemy = attacker;
+			attacker->client->act = 1;
+		}
+	}
+
+	if (targ->client) {
+		take *= (1 - (targ->client->pers.defense / 100.0));
+		if (random() <= (targ->client->pers.speedStat / 100.0)) {
+			take = 0;
+			gi.centerprintf(targ, "You dodged\n");
+		}
+		else {
+			gi.centerprintf(targ, "You took %d damage\n", take);
+		}
+		if (attacker->svflags & SVF_MONSTER) {
+			attacker->nextthink = level.time + FRAMETIME + 1000000;
+			attacker->enemy = targ;
+			attacker->monsterinfo.active = 1;
+			targ->client->act = 0;
+		}
+	}
 
 // do the damage
 	if (take)

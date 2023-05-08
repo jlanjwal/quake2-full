@@ -91,6 +91,8 @@ This replaces the QC functions: ai_forward, ai_back, ai_pain, and ai_painforward
 */
 void ai_move (edict_t *self, float dist)
 {
+	if (self->monsterinfo.active == 1)
+		return;
 	M_walkmove (self, self->s.angles[YAW], dist);
 }
 
@@ -162,6 +164,9 @@ The monster is walking it's beat
 */
 void ai_walk (edict_t *self, float dist)
 {
+	if (self->monsterinfo.active == 1)
+		return;
+
 	M_MoveToGoal (self, dist);
 
 	// check for noticing a player
@@ -923,6 +928,9 @@ void ai_run (edict_t *self, float dist)
 	vec3_t		v_forward, v_right;
 	float		left, center, right;
 	vec3_t		left_target, right_target;
+
+	if (self->monsterinfo.active == 1)
+		return;
 
 	// if we're going to a combat point, just proceed
 	if (self->monsterinfo.aiflags & AI_COMBAT_POINT)
